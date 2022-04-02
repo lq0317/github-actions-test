@@ -1,0 +1,5 @@
+FROM node:16-alpine
+
+ENV WORKDIR=/app
+
+WORKDIR ${WORKDIR}
