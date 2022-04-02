@@ -1,0 +1,51 @@
+name: Build Base Image
+on: 
+  workflow_dispatch:
+    inputs:
+      image: 
+        description: image name:tag to sync, ex.  busybox:latest
+        required: true
+        type: choice
+        default: davionlinux
+        options:
+        - davion-amazonlinux
+        - davion-centos
+        - davion-alpine
+        - davion-nginx
+        - davion-nginxspa
+        - davion-openjdk
+        - davion-node
+        - davion-actions-runner
+        - davion-ubuntu
+      targetEcrAccountId: 
+        description: target ecr account
+        required: true
+        default: 148478469270
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64, eks, automation-default]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@main
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        id: login-ecr
+        with:
+          registries: ${{github.event.inputs.targetEcrAccountId}}
+      - name: Build Image
+        working-directory: dockerfiles/${{ github.event.inputs.image }}
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE: ${{github.event.inputs.image}}
+        run: |
+          source ../../cicd/libs/bash_color.sh
+          for i in */; do
+            cd $i
+            tag=${i//\//}
+            IMAGE_URL=${ECR_REGISTRY}/${IMAGE}:${tag}
+            cmd="docker build --pull -t ${IMAGE_URL} . --build-arg accountId=${{github.event.inputs.targetEcrAccountId}}"
+            echo; clr_bold clr_green ">>> $cmd"; $cmd
+            cmd="docker push ${IMAGE_URL}"
+            echo; clr_bold clr_green ">>> $cmd"; $cmd
+            cd ..
+          done
