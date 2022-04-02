@@ -1,23 +1,13 @@
 on:
-  pull_request:
+  push:
     branches:
-      - master
-    paths:
-      - dockerfiles/**
-env:
-  default_account: 148478469270
-
+      - 20220402_test
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@main
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
-        id: login-ecr
-        with:
-          registries: ${default_account}
       - name: List Changefile
         id: changefile
         run: |
