@@ -12,5 +12,5 @@ jobs:
         id: changefile
         run: |
           URL="https://api.github.com/repos/${{ github.repository }}/pulls/1/files"
-          response=$(curl -H 'authorization: Bearer ${{ secrets.Test }}' -H "Accept: application/vnd.github.v3+json" -s -X GET -G $URL)   		
+          response=$(curl -H 'authorization: Bearer ${{ secrets.TEST }}' -H "Accept: application/vnd.github.v3+json" -s -X GET -G $URL)   		
           echo ${response}
