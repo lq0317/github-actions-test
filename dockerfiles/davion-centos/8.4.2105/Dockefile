@@ -1,0 +1,22 @@
+FROM centos:8.4.2105
+
+ENV WORKDIR=/app
+
+RUN yum install -y \
+    curl \
+    ca-certificates \
+    net-tools \
+    procps \
+    telnet \
+    time \
+    tzdata \
+    unzip \
+    zip \
+    tar \
+    gzip \
+    jq \
+    && yum clean all \
+    && rm -rf /var/cache/yum \
+    && mkdir -p ${WORKDIR}
+
+WORKDIR ${WORKDIR}
