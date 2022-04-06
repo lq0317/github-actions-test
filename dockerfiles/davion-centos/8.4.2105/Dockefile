@@ -3,7 +3,6 @@ FROM centos:8.4.2105
 ENV WORKDIR=/app
 
 RUN yum install -y \
-    curl \
     ca-certificates \
     net-tools \
     procps \
