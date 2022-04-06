@@ -21,4 +21,4 @@ jobs:
           set +e
           yaml_files=$(echo "${FILES}" | egrep '\.yaml$')
           json_files=$(echo "${FILES}" | egrep '\.json$')
-          echo $json_files $yaml_files
+          echo ${json_files} ${yaml_files}
