@@ -1,3 +1,4 @@
+name: build images test
 on:
   pull_request:
     branches:
