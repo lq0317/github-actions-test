@@ -1,7 +1,8 @@
+name: build images test
 on:
   pull_request:
     branches:
-      - 20220402_test
+      - master
     paths:
       - dockerfiles/**
 jobs:
