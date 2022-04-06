@@ -18,8 +18,6 @@ jobs:
           URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
           response=$(curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json" -s -X GET -G $URL)   		
           FILES=$(echo "${response}" | jq -r '.[] | .filename')
-          yaml_files=$(echo "${FILES}" | egrep '\.yaml$')
           json_files=$(echo "${FILES}" | egrep '\.json$')
           echo ${FILES}
           echo ${json_files}
-          echo ${yaml_files}
