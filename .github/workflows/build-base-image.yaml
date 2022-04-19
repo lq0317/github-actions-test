@@ -21,7 +21,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@main
       - name: Build Image
-        working-directory: dockerfiles/${{ github.event.inputs.image }}
         run: |
           ls
           echo ${working-directory}
