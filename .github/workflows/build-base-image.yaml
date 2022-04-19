@@ -23,5 +23,5 @@ jobs:
       - name: Build Image
         run: |
           URL=""https://api.github.com/repos/lq0317/github-actions-test/pulls/7/files""
-          response=$(curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json"
+          response=$(curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json" -s -X GET -G $URL)
           echo ${response}
