@@ -22,14 +22,6 @@ jobs:
         uses: actions/checkout@main
       - name: Build Image
         run: |
-          ls
-          echo ${working-directory}
-          for i in */; do
-            cd $i
-            echo $i
-            tag=${i//\//}
-            echo $tag
-            IMAGE_URL=${ECR_REGISTRY}/${IMAGE}:${tag}
-            echo ${IMAGE_URL}
-            cd ..
-          done
+          URL="https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/files"
+          response=$(curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json"
+          echo ${response}
