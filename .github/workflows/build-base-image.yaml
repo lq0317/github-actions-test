@@ -23,6 +23,7 @@ jobs:
       - name: Build Image
         working-directory: dockerfiles/${{ github.event.inputs.image }}
         run: |
+          ls
           echo ${working-directory}
           for i in */; do
             cd $i
