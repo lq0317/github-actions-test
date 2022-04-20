@@ -25,12 +25,18 @@ jobs:
           URL=""https://api.github.com/repos/lq0317/github-actions-test/pulls/12/files""
           response=$(curl -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json" -s -X GET -G $URL)
           DOCKERFILE_DIR=$(echo "${response}" | jq -r '.[] | .filename'|cut -d "/" -f1-3 |sort |uniq)
+          file=$(echo "${response}" | jq -r '.[] | .filename')
+          echo ${file}
           echo ${DOCKERFILE_DIR}
+          pwd
           for i in ${DOCKERFILE_DIR};do
             IMAGE=$(echo $i|cut -d "/" -f2)
+            echo $IMAGE
             TAG=$(echo $i|cut -d "/" -f3)
+            echo $TAG
             IMAGE_URL=${ECR_REGISTRY}/${IMAGE}:${tag}
-            cd /$i
+            echo ${IMAGE_URL}
+            cd $i
             ls
             #cmd="docker build -f ${DOCKERFILE_DIR}/Dockerfile -t ${IMAGE_URL} ."
           done
